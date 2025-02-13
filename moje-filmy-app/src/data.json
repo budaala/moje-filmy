@@ -1,0 +1,37 @@
+[
+    {
+      "id": 241,
+      "title": "Ich noce",
+      "director": "Frank Capra",
+      "year": 1934,
+      "rate": 8
+    },
+    {
+      "id": 246,
+      "title": "Gandhi",
+      "director": "Richard Attenborough",
+      "year": 1982,
+      "rate": 8
+    },
+    {
+      "id": 247,
+      "title": "Aladyn",
+      "director": "Ron Clements",
+      "year": 1992,
+      "rate": 8
+    },
+    {
+      "id": 248,
+      "title": "Służące",
+      "director": "Tate Taylor",
+      "year": 2011,
+      "rate": 8
+    },
+    {
+      "id": 249,
+      "title": "Jai Bhim",
+      "director": "T.J. Gnanavel",
+      "year": 2021,
+      "rate": 8
+    }
+  ]
