@@ -27,15 +27,11 @@ namespace moje_filmy_api.Controllers
             try
             {
                 var movies = await _context.Movies.ToListAsync();
-                if (movies.Count == 0)
-                {
-                    return NotFound();
-                }
                 return Ok(movies);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
 
@@ -58,7 +54,7 @@ namespace moje_filmy_api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
 
@@ -104,7 +100,7 @@ namespace moje_filmy_api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
 
@@ -119,7 +115,7 @@ namespace moje_filmy_api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
 
@@ -143,7 +139,7 @@ namespace moje_filmy_api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
 
@@ -167,7 +163,7 @@ namespace moje_filmy_api.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
 

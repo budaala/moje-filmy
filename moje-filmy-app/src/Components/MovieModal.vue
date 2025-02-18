@@ -39,7 +39,6 @@ onMounted(() => {
         }
         else {
             Object.assign(movie, data.movie);
-            console.log(movie);
         }
         modalInstance?.show();
     });
@@ -50,7 +49,6 @@ onUnmounted(() => {
 });
 
 const addMovie = async () => {
-    console.log('add movie ' + movie.title);
     var response = await MovieService.addMovie(movie);
     if (response.success === true) {
         errorMessage = null;
@@ -63,7 +61,6 @@ const addMovie = async () => {
 };
 
 const editMovie = async () => {
-    console.log('edit movie ' + movie.title);
     var response = await MovieService.editMovie(movie);
     if (response.success === true) {
         errorMessage = null;

@@ -33,7 +33,6 @@ const closeModal = () => {
 };
 
 const deleteMovie = async () => {
-    console.log('delete movie ' + movieId.value);
     var response = await MovieService.deleteMovie(movieId.value);
     if (response.success === true) {
         errorMessage.value = null;

@@ -5,7 +5,7 @@
 namespace moje_filmy_api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,11 +14,11 @@ namespace moje_filmy_api.Migrations
                 name: "Movies",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExternalId = table.Column<int>(type: "int", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Director = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ExternalId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Title = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Director = table.Column<string>(type: "varchar(200)", nullable: true),
                     Year = table.Column<int>(type: "int", nullable: true),
                     Rate = table.Column<int>(type: "int", nullable: true)
                 },

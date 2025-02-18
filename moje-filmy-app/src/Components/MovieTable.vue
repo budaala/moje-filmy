@@ -20,6 +20,7 @@ const getMovies = async () => {
     }
     if (response.data.length === 0) {
         errorMessage.value = "Brak filmów w bazie.";
+        loading.value = false;
         return;
     }
     movies.value = await response.data;
@@ -40,6 +41,9 @@ const getNewMovies = async () => {
 
 // close success alert after 5 seconds
 const closeSuccessAlert = () => {
+    if (successMessage.value === null) {
+        return;
+    }
     setTimeout(() => {
         successMessage.value = null;
     }, 5000);
@@ -53,13 +57,16 @@ const openDeleteMovieModal = (movieIdToDelete, movieTitleToDelete) => {
 const movieDeleted = (movieId) => {
     successMessage.value = "Film o id " + movieId + " został usunięty.";
     closeSuccessAlert();
-    console.log("getingMovies");
     getMovies();
 };
 
 // adding and editing movies
 const openMovieModal = (mode, movie = null) => {
     eventBus.emit("openMovieModal", { mode: mode, movie: movie });
+};
+
+const closeAlert = () => {
+    successMessage.value = null;
 };
 
 onMounted(() => {
@@ -94,7 +101,7 @@ onUnmounted(() => {
         </div>
         <div v-if="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
             {{ successMessage }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" @click="closeAlert" aria-label="Close"></button>
         </div>
         <div v-if="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
             {{ errorMessage }}
@@ -104,7 +111,6 @@ onUnmounted(() => {
             <table class="table table-light table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Id</th>
                         <th scope="col">Tytuł</th>
                         <th scope="col">Reżyser</th>
                         <th scope="col">Rok</th>
@@ -114,7 +120,6 @@ onUnmounted(() => {
                 </thead>
                 <tbody>
                     <tr v-for="(movie) in movies" :key="movie.id">
-                        <th scope="row">{{ movie.id }}</th>
                         <td>{{ movie.title }}</td>
                         <td>{{ movie.director }}</td>
                         <td>{{ movie.year }}</td>
