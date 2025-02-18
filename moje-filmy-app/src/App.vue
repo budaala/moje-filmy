@@ -18,6 +18,10 @@ import MovieTable from './Components/MovieTable.vue';
   --dark: #343a40;
 }
 
+body {
+  background-color: var(--light) !important;
+}
+
 .btn-primary {
   background-color: var(--primary) !important;
   border: 2px solid var(--primary) !important;
@@ -56,7 +60,6 @@ import MovieTable from './Components/MovieTable.vue';
 }
 
 h1 {
-  color: var(--primary) !important;
   font-size: 3rem !important;
   text-align: center;
   font-weight: bold !important;

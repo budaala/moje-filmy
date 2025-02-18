@@ -12,7 +12,6 @@ const axiosInstance = axios.create({
 const getMovies = async () => {
   try {
     var response = await axiosInstance.get("/getMovies");
-    console.log(response.data);
     if (response.status === 200) {
       if (response.data === null) {
         return {
@@ -43,7 +42,6 @@ const getMovies = async () => {
 const getNewMovies = async () => {
   try {
     var response = await axiosInstance.get("/getNewMovies");
-    console.log(response.data);
     if (response.status === 200) {
       if (response.data === null || response.data.length === 0) {
         return {
@@ -84,7 +82,6 @@ const returnSuccessMessage = (movieCount) => {
 const addMovie = async (movie) => {
   try {
     var response = await axiosInstance.post("/addMovie", movie);
-    console.log(response);
     if (response.status === 200) {
       return { success: true, data: response.data };
     } else {
@@ -102,7 +99,6 @@ const addMovie = async (movie) => {
 const editMovie = async (movie) => {
   try {
     var response = await axiosInstance.put("/editMovie", movie);
-    console.log(response);
     if (response.status === 200) {
       return { success: true, data: response.data };
     } else {
@@ -121,7 +117,6 @@ const deleteMovie = async (id) => {
   try {
     const movieId = parseInt(id);
     var response = await axiosInstance.delete("/deleteMovie/" + movieId);
-    console.log(response);
     if (response.status === 200) {
       return { success: true };
     } else {

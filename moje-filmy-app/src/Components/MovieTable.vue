@@ -8,12 +8,14 @@ import MovieService from '@/services/MovieService';
 const movies = ref(null);
 const successMessage = ref(null);
 const errorMessage = ref(null);
+let loading = ref(true);
 
 // gettin movies
 const getMovies = async () => {
     const response = await MovieService.getMovies();
     if (response.success === false) {
         errorMessage.value = response.errorMessage;
+        loading.value = false;
         return;
     }
     if (response.data.length === 0) {
@@ -21,6 +23,7 @@ const getMovies = async () => {
         return;
     }
     movies.value = await response.data;
+    loading.value = false;
 };
 
 const getNewMovies = async () => {
@@ -97,32 +100,39 @@ onUnmounted(() => {
             {{ errorMessage }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Tytuł</th>
-                    <th scope="col">Reżyser</th>
-                    <th scope="col">Rok</th>
-                    <th scope="col">Ocena</th>
-                    <th scope="col">Akcje</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(movie) in movies" :key="movie.id">
-                    <th scope="row">{{ movie.id }}</th>
-                    <td>{{ movie.title }}</td>
-                    <td>{{ movie.director }}</td>
-                    <td>{{ movie.year }}</td>
-                    <td>{{ movie.rate }}</td>
-                    <td class="row-buttons">
-                        <button class="btn btn-secondary" @click="openMovieModal('edit', movie)">Edytuj</button>
-                        <button class="btn btn-danger"
-                            @click="openDeleteMovieModal(movie.id, movie.title)">Usuń</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-light table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Tytuł</th>
+                        <th scope="col">Reżyser</th>
+                        <th scope="col">Rok</th>
+                        <th scope="col">Ocena</th>
+                        <th scope="col">Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(movie) in movies" :key="movie.id">
+                        <th scope="row">{{ movie.id }}</th>
+                        <td>{{ movie.title }}</td>
+                        <td>{{ movie.director }}</td>
+                        <td>{{ movie.year }}</td>
+                        <td>{{ movie.rate }}</td>
+                        <td class="row-buttons">
+                            <button class="btn btn-secondary edit-button" @click="openMovieModal('edit', movie)">Edytuj</button>
+                            <button class="btn btn-danger delete-button"
+                                @click="openDeleteMovieModal(movie.id, movie.title)">Usuń</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div v-if="loading === true" class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
     </div>
 
     <DeleteMovieModal />
@@ -149,12 +159,35 @@ onUnmounted(() => {
     padding: 8px 50px !important;
 }
 
-table {
-    margin: 1rem auto;
+.edit-button {
+    margin-right: 0.5rem;
 }
 
-.row-buttons {
-    display: flex;
-    gap: 0.5rem;
+.table-responsive {
+    margin: 1rem auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+@media screen and (max-width: 670px) {
+    .row-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+}
+
+@media screen and (max-width: 500px) {
+    h1 {
+        font-size: 2rem !important;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
 }
 </style>
