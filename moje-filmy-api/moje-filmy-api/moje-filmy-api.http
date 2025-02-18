@@ -1,0 +1,11 @@
+@moje-filmy-api_HostAddress = https://localhost:7052
+@moje_filmy_api_HostAddress = http://localhost:5127
+
+GET {{moje_filmy_api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{moje-filmy-api_HostAddress}}/weatherforecast
+
+###
