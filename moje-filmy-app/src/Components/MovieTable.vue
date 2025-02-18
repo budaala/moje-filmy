@@ -12,18 +12,34 @@ const errorMessage = ref(null);
 // gettin movies
 const getMovies = async () => {
     const response = await MovieService.getMovies();
+    if (response.success === false) {
+        errorMessage.value = response.errorMessage;
+        return;
+    }
+    if (response.data.length === 0) {
+        errorMessage.value = "Brak filmów w bazie.";
+        return;
+    }
     movies.value = await response.data;
 };
 
 const getNewMovies = async () => {
     const response = await MovieService.getNewMovies();
     if (response.success === true) {
-        successMessage.value = "Pobrano nowe filmy.";
+        successMessage.value = response.successMessage;
+        closeSuccessAlert();
         getMovies();
     }
     else {
         errorMessage.value = response.errorMessage;
     }
+};
+
+// close success alert after 5 seconds
+const closeSuccessAlert = () => {
+    setTimeout(() => {
+        successMessage.value = null;
+    }, 5000);
 };
 
 // deleting movies
@@ -33,6 +49,7 @@ const openDeleteMovieModal = (movieIdToDelete, movieTitleToDelete) => {
 
 const movieDeleted = (movieId) => {
     successMessage.value = "Film o id " + movieId + " został usunięty.";
+    closeSuccessAlert();
     console.log("getingMovies");
     getMovies();
 };
@@ -47,10 +64,12 @@ onMounted(() => {
     eventBus.on("movieDeleted", movieDeleted);
     eventBus.on("movieAdded", () => {
         successMessage.value = "Film został dodany.";
+        closeSuccessAlert();
         getMovies();
     });
     eventBus.on("movieEdited", () => {
         successMessage.value = "Film został zaktualizowany.";
+        closeSuccessAlert();
         getMovies();
     });
 });
@@ -68,7 +87,7 @@ onUnmounted(() => {
         <h1>Biblioteka filmów</h1>
         <div class="action-buttons">
             <button class="btn btn-primary" id="download-button" @click="getNewMovies">Pobierz filmy</button>
-            <button class="btn btn-secondary" id="add-button" @click="openMovieModal('add')">Dodaj</button>
+            <button class="btn btn-primary" id="add-button" @click="openMovieModal('add')">Dodaj</button>
         </div>
         <div v-if="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
             {{ successMessage }}
